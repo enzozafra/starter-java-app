@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@RunWith(MockitoJUnitRunner.class)
 public class HelloControllerTest {
 
   @Autowired private MockMvc mvc;
@@ -36,5 +35,12 @@ public class HelloControllerTest {
     mvc.perform(MockMvcRequestBuilders.get("/handler").accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().string(equalTo("Hi im the handler")));
+  }
+
+  @Test
+  public void getDependedHandler() throws Exception {
+    mvc.perform(MockMvcRequestBuilders.get("/dependedhandler").accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string(equalTo("Hi I'm the depended handler")));
   }
 }
