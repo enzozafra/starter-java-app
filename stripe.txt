@@ -1,0 +1,15 @@
+1. Given a list of languages in a header and a list of languages a server accepts, return the languages that will be processed in the same order sent in the header.
+ex. header = ["en-CA", "en-FR", "en-US"], accepted = ["xy-YZ", "ab-CD", "en-US"]
+ => ["en-US"]
+ 
+1 b) Create a testing framework so that you can test this code against inputs easily
+
+2. Assume the header now the server now accepts some languages generically.
+ex. header = ["en-CA", "en-FR", "en-US"], accepted = ["xy-YZ", "ab-CD", "en"]
+=> ["en-CA", "en-FR", "en-US"]
+
+3. Assume the server can accept a wildcard.
+
+4. Idk didn't make it this far
+
+5. Idk didn't make it this far

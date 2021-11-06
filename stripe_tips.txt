@@ -1,0 +1,262 @@
+justchew:bulb:  1:41 PM
+Yeah exactly so you should have 1 coding question(non-LC), 1 debugging, 1 api integration, 1 design, 1 past experiences/behavioral
+1:41
+If you use Java for the api integration question then they use okhttp so you can get familiar with that
+1:42
+Also for hiring they split the levels in half (2a vs 2b) to determine pay grade upon joining
+
+enzo  1:43 PM
+ahh okay thanks dude!
+1:43
+should I study LC type questions at all?
+1:43
+been a while since i did those lol
+
+justchew:bulb:  1:44 PM
+maybe, so how the coding question works is they ask an iterative question kinda like square where they dont really care about your efficiency at all but they care more about your code quality
+1:45
+the difficulty in the question comes when you need to adapt the new feature cause sometimes youll need to change or refactor some the previous work that you did
+1:45
+Youd benefit a lot from making everything modular and writing clean code (which I think they specifically look for as well)
+
+enzo  1:45 PM
+ohh okay that makes sense
+1:46
+basically like a task at work
+1:46
+just gotta do it quick i guess
+1:46
+do you remember what your question was like?
+1:46
+i heard the descriptions can get suuuper long
+
+justchew:bulb:  1:46 PM
+Kinda, I think the question I got was like you need to take in a list of locales like en-US and then another list of locales and return all the locales that match the criteria from the first
+1:46
+so like you would have a "supported locales" list and another list of locales to match against
+
+enzo  1:47 PM
+ahh okay
+
+justchew:bulb:  1:47 PM
+later they added stuff like wildcards
+1:47
+and some ordering requirements etc
+
+enzo  1:47 PM
+did you just use a hashtable?
+
+justchew:bulb:  1:47 PM
+I think I just did an n^2 loop
+1:47
+They dont really care about efficiency
+
+enzo  1:47 PM
+gotcha
+
+justchew:bulb:  1:47 PM
+so it was just the easiest way to model the code
+
+enzo  1:47 PM
+sounds good sounds good
+1:48
+did you ahve to worry about parsing en-US into a Java class or something
+
+justchew:bulb:  1:48 PM
+Also come up with test cases after each iteration (suggest them and see if the interviewer wants  to move on or actually test it)
+:ok_hand:
+1
+
+1:48
+Only if you wanted to, I know there's a Locales library or something
+1:48
+I don't think I used it though since I wasn't familiar with all the nuances of it
+1:48
+I just made my own Locale class
+
+enzo  1:49 PM
+okay nice
+1:49
+sounds pretty straight forward
+1:49
+just gotta make it production level code
+
+justchew:bulb:  1:49 PM
+Pretty much, don't gotta go too crazy with it tho
+1:49
+like no getters + setters or whatever
+
+enzo  1:49 PM
+Sounds good :+1:
+1:50
+thanks dudeee
+
+justchew:bulb:  1:50 PM
+Are you just doing the phone screen first?
+1:50
+yeah np
+
+enzo  1:50 PM
+yeah just a phone screen
+1:50
+probably gonna book it sometime next week
+
+justchew:bulb:  1:50 PM
+Ok, so the debugging stuff probably wont come til later
+
+enzo  1:50 PM
+yeah
+
+justchew:bulb:  1:50 PM
+That one is a pretty big code base so I would imagine they aren't able to create new questions often so you'll probably get the same one I did
+1:51
+I think it was something like a jsonparser library and there was an off by 1 error somewhere
+
+enzo  1:52 PM
+ooooo wow thats interesting
+
+justchew:bulb:  1:52 PM
+They have failing + passing tests and theyre interested in the strategy you use to debug the code base so I would just start at identifying which tests are failing and how they differ from the other tests
+
+enzo  1:52 PM
+they just expect you to step through the code in unit tests?
+1:52
+gotcha
+
+justchew:bulb:  1:52 PM
+Yeah I just used a debugger to step through the code
+1:52
+The code is pretty complicated though so you wont be able to read the entire thing and try to understand it all
+
+enzo  1:53 PM
+fair enough
+
+justchew:bulb:  1:53 PM
+So use the existing unit tests as a base to identify suspicious parts of the code and maybe experiment with the logic to see how it affects the tests
+
+enzo  1:53 PM
+basically:
+figure out which tests are failing
+try to udnerstand what the tests are doing
+step through code?
+1:53
+okok makes sense
+
+justchew:bulb:  1:53 PM
+yeah pretty much
+
+enzo  1:53 PM
+sweet
+1:54
+thats actually pretty cool
+1:54
+i much prefer these interviews
+1:54
+dont really wanna grind LC again
+
+justchew:bulb:  1:54 PM
+I think the error was something like, when parsing an array in json it fails to identify the end and makes everything after that array null or something
+:ok_hand:
+1
+
+1:54
+Yeah it was a pretty good experience. If you're good at coding you don't really need to study much for it
+
+enzo  1:54 PM
+ill keep that in mind
+1:55
+i guess i should have my IDE setup
+1:55
+with all the libraries i want
+1:55
+also for the bug bashing, they just make you clone a repo?
+
+justchew:bulb:  1:55 PM
+If you wanna do LC to prep I would look for questions that aren't super algorithmically dense and focus more on translating thoughts to code than coming up with the algo in the first place
+1:55
+Yeah you gotta clone the repo
+
+Slackbot  1:55 PM
+@enzo changed the message retention policy for this conversation to Retain all messages for a specific number of days. Messages and logs for this channel will be deleted after 365 days.
+
+enzo  1:55 PM
+cool cool
+
+justchew:bulb:  1:56 PM
+I think for the api integration thing you're given 0 code so have some kind of dependency manager setup
+1:56
+If youre using java get familiar with maven
+
+enzo  1:56 PM
+sounds good
+1:56
+basically just get familiar with how to load dependencies into the pom right
+
+justchew:bulb:  1:56 PM
+Would be good to setup junit and okhttp (I think they require you to use okhttp instead of other libraries cause they want to test if you can adapt a library just by looking at the docs)
+1:56
+yep
+
+enzo  1:57 PM
+ahh ok nice
+
+justchew:bulb:  1:57 PM
+for the system design question I was asked to design a metrics aggregation system
+1:57
+like signalfx or datadog
+:ok_hand:
+1
+
+1:58
+At your YOE you might be able to get a 2B offer which should be about 300-330 (at least thats what I was offered earlier this year)
+
+enzo  1:59 PM
+ill def need to brush up on system design
+1:59
+damn lmfao
+1:59
+like i would rather stay at Square but that kind of difference is hard to pass up
+1:59
+Canadian pay is just sucky rn
+
+justchew:bulb:  1:59 PM
+You can always rebound later loll
+2:00
+If you get the offer are you planning on taking it?
+
+enzo  2:00 PM
+yeah fingers crossed
+2:00
+probably
+2:00
+i'm not sure actually
+2:00
+id feel really bad cause i like my team
+2:01
+also WLB is pretty good rn lol
+2:01
+id basically be hoping to get relocated then promo'd to be able to match up the salary
+
+justchew:bulb:  2:02 PM
+Yeah plus youd have to wait until April
+2:02
+The base probably wont go up by that much either
+2:03
+Average for l4 seems to be 147k. I think Stripe would give you near 200
+
+enzo  2:03 PM
+i'll think about it more seriously if i get an offer
+2:03
+basically a 50/50
+
+justchew:bulb:  2:04 PM
+True no point in stressing until it happens
+
+enzo  2:04 PM
+word
+2:04
+anyway thanks again dude! ill update you
+New
+
+justchew:bulb:  2:05 PM
+cool np gl
