@@ -1,0 +1,14 @@
+1. Given a list of languages in a header and a list of languages a server accepts, return the languages that will be processed in the same order sent in the header.
+ex. header = "en-CA, en-FR, en-US", accepted = ["xy-YZ", "ab-CD", "en-US"]
+ => ["en-US"]
+ 
+2. Assume the header now the server now accepts some languages generically.
+ex. header = "en", accepted = ["en-US", "fr-CA", "fr-FR", "en-CA"]
+=> ["en-US", "en-CA"]
+
+3. Assume the server can accept a wildcard.
+ex. header = "en-US, *", accepted = ["en-US", "fr-CA", "fr-FR"]
+=> ["en-US", "fr-CA", "fr-FR"]
+
+ex. header = "fr-FR, fr, *", accepted = ["en-US", "fr-CA", "fr-FR"]
+=> ["fr-FR", "fr-CA", "en-US"]
