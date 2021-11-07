@@ -1,0 +1,142 @@
+/*
+Question comes from https://www1point3acrescom/bbs/thread-668514-1-1html
+
+4 actions:
+
+- 1 CHARGE customer -> merchant
+- 2 CONFIRM <- mutually exclusive ->REFUND
+
+    CHARGE -> CONFIRM: approved no refund
+    CHARGE -> REFUND without CONFIRM
+
+- 3 REFUND: refunded charge's amount should not be included in the payout balance.
+            but the card network processing fee should be deduced from the payout balance.
+            stripe processing fee not be deduced in this case
+
+- 4 PAYOUT: stripe -> merchant
+            up until that point of receiving the action print the merchant's balance from
+            beginning or the previous payout action if any then merchant payout balance is reset
+            to 0 include only confirmed charges after deducing card network and stripe
+            processing fee.
+            Stripe has a fixed processing fee of 2%
+
+ Input Format:
+ N
+ CARD_NETWORK <space> PERCENT
+ no duplicated entries for the same card network
+
+ M
+ actions
+
+ Constraints:
+ 2 <= N <= 5 (Integer)
+ 0 <= M <= 100 (Integer)
+ 0.1 <= PERCENT <= 100 (Float)
+ CARD_NETWORK (String)
+
+<HashTable<HashTable<List<LedgerEntry>>>
+key1: merchant
+key2: charge
+
+ Actions:
+ /charge?network=<CARD_NETWORK>&amount=<AMOUNT>&merchant_id=<MERCHANT_ID>&charge_id=<CHARGE_ID>
+
+ network: credit card String
+ amount: 0 <= AMOUNT <= 4294967295 Integer
+ merchant_id: String
+ charge_id: String
+
+ /payout?merchant_id=<MERCHANT_ID>
+ /confirm?charge_id=<CHARGE_ID>
+ /refund?charge_id=<CHARGE_ID>
+
+ Comments on the input
+ - All actions are well-formed URLs need not verifying the ordering of query parameters
+ - charge_id is unique
+ - input action are properly ordered.
+   refund or confirm will not occur before the charge action itself
+ - charge action only use the card network whose processing fee percent age is specified in the
+   input
+
+ Output:
+ for each payout action in the input
+
+ "merchantID payout balance"
+
+ rounded *up* to the nearest whole number integer
+ do not round the numbers after each action
+ Only the final number to be printed
+
+ Examples
+
+ Input:
+ 2
+ visa 2.0
+ mastercard 3.0
+ 3
+ /charge?network=visa&amount=100&merchant_id=m001&charge_id=c001
+ /confirm?charge_id=c001
+ /payout?merchant_id=m001
+
+ Output:
+ m001, 96
+
+ Explanation:
+ Visa processing fee is 2.0% and Stripe processing fee is fixed 2.0%
+
+ --------
+
+ Input:
+ 2
+ visa 2.0
+ mastercard 3.0
+ 5
+ /charge?network=visa&amount=100&merchant_id=m001&charge_id=c001
+ /charge?merchant_id=m001&amount=56network=mastercard&charge_id=c002
+ /refund?charge_id=c001
+ /confirm?charge_id=c002
+ /payout?merchant_id=m001
+
+ Output:
+ m001, 52
+
+ Stripe processing fee is fixed 2.0%
+ for c001: refund but need pay visa fee
+           -0.02*100 = -2
+ for c002: confirmed with mastercard fee
+           +56*(1-0.03+0.02) = 53.2
+
+53.2 - 2 = 51.2
+
+So left 51.2 rounded up to $52
+
+--------
+Input:
+
+2
+visa 2.0
+mastercard 3.0
+8
+/charge?merchant_id=m001&charge_id=c001&amount=1000&network=visa
+/charge?merchant_id=m001&charge_id=c002&amount=1000&network=mastercard
+/confirm?charge_id=c001
+/confirm?charge_id=c002
+/payout?merchant_id=m001
+/charge?merchant_id=m001&charge_id=c003&amount=1000&network=visa
+/confirm?charge_id=c003
+/payout?merchant_id=m001
+
+output
+m001, 1910
+m001, 960
+
+Explanation:
++1000-20-20
++1000-20-30
+total 1910
+
++1000-20-20
+total 960
+
+Follow up
+merchant has so many refund so that the balance is negative how to handle it?

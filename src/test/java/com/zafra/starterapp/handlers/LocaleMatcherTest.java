@@ -20,10 +20,10 @@ public class LocaleMatcherTest {
 
   @Test
   public void getValidLocales_happyPath() {
-    var locales = List.of("en-CA", "en-FR", "en-US");
-    var patterns = List.of("xy-YZ", "ab-CD", "en-US");
+    var patterns = "en-CA, en-FR, en-US";
+    var locales = List.of("xy-YZ", "ab-CD", "en-US");
 
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
+    var actualResult = localeMatcher.getValidLocales(patterns, locales);
 
     var expectedResult = List.of("en-US");
     assertThat(actualResult).isEqualTo(expectedResult);
@@ -31,10 +31,10 @@ public class LocaleMatcherTest {
 
   @Test
   public void getValidLocales_noMatch() {
-    var locales = List.of("en-CA", "en-FR", "en-US");
-    var patterns = List.of("xy-YZ", "ab-CD", "en-PL");
+    var patterns = "en-CA, en-FR, en-US";
+    var locales = List.of("xy-YZ", "ab-CD", "en-PL");
 
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
+    var actualResult = localeMatcher.getValidLocales(patterns, locales);
 
     var expectedResult = List.of();
     assertThat(actualResult).isEqualTo(expectedResult);
@@ -42,21 +42,10 @@ public class LocaleMatcherTest {
 
   @Test
   public void getValidLocales_noPatterns() {
-    var locales = List.of("en-CA", "en-FR", "en-US");
-    List<String> patterns = List.of();
-
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
-
-    var expectedResult = List.of();
-    assertThat(actualResult).isEqualTo(expectedResult);
-  }
-
-  @Test
-  public void getValidLocales_noLocales() {
+    var patterns = "en-CA, en-FR, en-US";
     List<String> locales = List.of();
-    var patterns = List.of("xy-YZ", "ab-CD", "en-PL");
 
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
+    var actualResult = localeMatcher.getValidLocales(patterns, locales);
 
     var expectedResult = List.of();
     assertThat(actualResult).isEqualTo(expectedResult);
@@ -64,56 +53,34 @@ public class LocaleMatcherTest {
 
   @Test
   public void getValidLocales_genericLanguage() {
-    var locales = List.of("en-CA", "en-FR", "en-US");
-    var patterns = List.of("xy-YZ", "ab-CD", "en");
+    var patterns = "en";
+    List<String> locales = List.of("en-US", "fr-CA", "fr-FR", "en-CA");
 
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
+    var actualResult = localeMatcher.getValidLocales(patterns, locales);
 
-    var expectedResult = List.of("en-CA", "en-FR", "en-US");
+    var expectedResult = List.of("en-US", "en-CA");
     assertThat(actualResult).isEqualTo(expectedResult);
   }
 
   @Test
-  public void getValidLocales_genericCountry() {
-    var locales = List.of("en-CA", "en-FR", "en-US", "es-FR");
-    var patterns = List.of("xy-YZ", "ab-CD", "FR");
+  public void getValidLocales_wildCard() {
+    var patterns = "en-US, *";
+    List<String> locales = List.of("en-US", "fr-CA", "fr-FR");
 
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
+    var actualResult = localeMatcher.getValidLocales(patterns, locales);
 
-    var expectedResult = List.of("es-FR", "en-FR");
-    assertThat(actualResult).hasSameElementsAs(expectedResult);
+    var expectedResult = List.of("en-US", "fr-CA", "fr-FR");
+    assertThat(actualResult).isEqualTo(expectedResult);
   }
 
   @Test
-  public void getValidLocales_withLanguageWildCards() {
-    var locales = List.of("en-CA", "es-CA", "ss-CA", "es-US", "en-US", "es-FR");
-    var patterns = List.of("e%-CA", "*-US");
+  public void getValidLocales_wildCardMaintainsSortedOrder() {
+    var patterns = "fr-FR, fr, *";
+    List<String> locales = List.of("en-US", "fr-CA", "fr-FR");
 
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
+    var actualResult = localeMatcher.getValidLocales(patterns, locales);
 
-    var expectedResult = List.of("en-CA", "es-CA", "es-US", "en-US");
-    assertThat(actualResult).hasSameElementsAs(expectedResult);
-  }
-
-  @Test
-  public void getValidLocales_withCountryWildCards() {
-    var locales = List.of("en-CA", "en-US", "en-SP", "es-CA", "es-CC", "es-AB");
-    var patterns = List.of("en-*", "es-C%");
-
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
-
-    var expectedResult = List.of("en-CA", "en-US", "en-SP", "es-CA", "es-CC");
-    assertThat(actualResult).hasSameElementsAs(expectedResult);
-  }
-
-  @Test
-  public void getValidLocales_genericWithWildcard() {
-    var locales = List.of("en-CA", "es-US", "en-SP", "fr-CA", "fr-CC", "fr-US");
-    var patterns = List.of("e%", "U%");
-
-    var actualResult = localeMatcher.getValidLocales(locales, patterns);
-
-    var expectedResult = List.of("en-CA", "es-US", "en-SP", "fr-US");
-    assertThat(actualResult).hasSameElementsAs(expectedResult);
+    var expectedResult = List.of("fr-FR", "fr-CA", "en-US");
+    assertThat(actualResult).isEqualTo(expectedResult);
   }
 }
