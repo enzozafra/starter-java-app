@@ -37,7 +37,7 @@ public class ServerRemover {
 
   private int bestTimeToRemoveServer(List<Log> logs) {
     int minPenalty = Integer.MAX_VALUE;
-    int minTime = -Integer.MAX_VALUE;
+    int minTime = Integer.MAX_VALUE;
 
     // Brute force by testing every single time
     for (int i = 0; i < logs.size() + 1; i++) {

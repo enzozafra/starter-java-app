@@ -102,6 +102,6 @@ public class Numeronym {
   public static void main(String args[]) {
     System.out.println(
         compress("stripe.com/checkout/payments/customer.maria.bay.area.next.job", 3)
-            .equals("s4e.c1m/c6t/p6s/c6r.m3a.a12b"));
+            .equals("s4e.c1m/c6t/p6s/c6r.m3a.b12b"));
   }
 }
