@@ -138,9 +138,9 @@ public class RemoveServe {
 
    hour : 1  2  3  4  // total penalty = 2 (1 server-down hour before remove + 1 server-up hour after remove)
      log: 1  0  1  0
-           ^
-           |
-          remove_at = 2
+              ^
+              |
+            remove_at = 2
 
 
    hour : 1 2 3  4    // total penalty = 1(1 server-down hour before remove)
