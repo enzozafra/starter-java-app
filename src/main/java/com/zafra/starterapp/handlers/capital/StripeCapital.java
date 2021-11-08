@@ -30,6 +30,7 @@ public class StripeCapital {
   }
 
   public List<CapitalResult> handleActions(List<String> actions) {
+    // "CREATE_LOAN: acct_foobar,loan1,5000"
     actions.forEach(action -> {
       var split = action.split(":");
 
