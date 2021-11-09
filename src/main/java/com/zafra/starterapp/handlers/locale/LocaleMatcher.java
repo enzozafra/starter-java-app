@@ -1,7 +1,7 @@
-package com.zafra.starterapp.handlers;
+package com.zafra.starterapp.handlers.locale;
 
-import com.zafra.starterapp.models.Locale;
-import com.zafra.starterapp.models.LocalePattern;
+import com.zafra.starterapp.models.locale.Locale;
+import com.zafra.starterapp.models.locale.LocalePattern;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package com.zafra.starterapp.models;
+package com.zafra.starterapp.models.locale;
 
 import lombok.Builder;
 import lombok.Data;

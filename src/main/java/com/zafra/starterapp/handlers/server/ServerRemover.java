@@ -1,7 +1,7 @@
-package com.zafra.starterapp.handlers;
+package com.zafra.starterapp.handlers.server;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.zafra.starterapp.models.Log;
+import com.zafra.starterapp.models.server.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;

@@ -1,5 +1,6 @@
-package com.zafra.starterapp.handlers;
+package com.zafra.starterapp.handlers.locale;
 
+import com.zafra.starterapp.handlers.locale.LocaleMatcher;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
