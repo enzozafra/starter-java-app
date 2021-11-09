@@ -1,6 +1,6 @@
-package com.zafra.starterapp.handlers;
+package com.zafra.starterapp.handlers.server;
 
-import com.zafra.starterapp.models.Log;
+import com.zafra.starterapp.models.server.Log;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;

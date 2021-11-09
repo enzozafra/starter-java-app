@@ -1,5 +1,6 @@
-package com.zafra.starterapp.models;
+package com.zafra.starterapp.models.locale;
 
+import com.zafra.starterapp.models.locale.Locale;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
