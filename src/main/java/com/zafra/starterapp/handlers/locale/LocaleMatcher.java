@@ -36,7 +36,7 @@ public class LocaleMatcher {
     var parsedLocales = parseLocales(validLocales);
     var parsedPatterns = parsePatterns(localeHeaders);
 
-    return getValidLocalesHelper(parsedLocales, parsedPatterns)
+    return getValidLocales(parsedLocales, parsedPatterns)
         .stream()
         .map(Locale::toString)
         .collect(toImmutableList());
@@ -56,7 +56,7 @@ public class LocaleMatcher {
         .collect(toImmutableList());
   }
 
-  private List<Locale> getValidLocalesHelper(List<Locale> locales, List<LocalePattern> patterns) {
+  private List<Locale> getValidLocales(List<Locale> locales, List<LocalePattern> patterns) {
     Set<Locale> accepted = new HashSet<>();
     List<Locale> orderedAcceptedLocales = new ArrayList<>();
 
