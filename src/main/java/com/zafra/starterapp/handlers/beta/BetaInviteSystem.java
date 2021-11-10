@@ -64,11 +64,8 @@ public class BetaInviteSystem {
   public int calculateNumberOfBots() {
     int numBots = 0;
 
-    for (Map.Entry<String, Map<DateTime, BetaRecord>> entry : botDetectorMap.entrySet()) {
-      var timeToRecordMap = entry.getValue();
-
-      for (Map.Entry<DateTime, BetaRecord> timeToRecordEntry : timeToRecordMap.entrySet()) {
-        var record = timeToRecordEntry.getValue();
+    for (Map<DateTime, BetaRecord> timeToRecordMap : botDetectorMap.values()) {
+      for (BetaRecord record : timeToRecordMap.values()) {
         if (record.getInviteRequestCount() >= 5) {
           numBots += 1;
         }
