@@ -17,18 +17,13 @@ public class ServerRemover {
   }
 
   private int compute_penalty(List<Log> logs, int remove_at) {
-    int penalty = 0;
-
-    for (int i = 0; i < logs.size(); i++) {
-      var logObject = logs.get(i);
-
-      if (remove_at <= logObject.getTime() && !logObject.isDown()
-          || remove_at > logObject.getTime() && logObject.isDown()) {
-        penalty += 1;
-      }
+    if (logs.isEmpty()) {
+      return 0;
     }
 
-    return penalty;
+    return logs.stream()
+        .mapToInt(log -> log.getPenalty(remove_at))
+        .sum();
   }
 
   public int bestTimeToRemoveServer(String logString) {
@@ -55,28 +50,23 @@ public class ServerRemover {
     ArrayList<Integer> results = new ArrayList<>();
     boolean foundBegin = false;
 
-    var logSplit = logString.split(" ");
+    String[] logSplit = logString.split(" ");
 
     ArrayList<Log> currentLog = new ArrayList<>();
     int time = 0;
 
     for (int i = 0; i < logSplit.length; i++) {
-      var log = logSplit[i];
+      String log = logSplit[i];
 
       if (log.equals("BEGIN") && !foundBegin) {
         foundBegin = true;
         time = 1;
       } else if ((log.equals("1") || log.equals("0")) && foundBegin) {
-        currentLog.add(Log.builder()
-            .isDown(log.equals("1"))
-            .time(time)
-            .build());
+        currentLog.add(new Log(log.equals("1"), time));
         time += 1;
-      } else if (log.equals("END") && foundBegin) {
-        if (!currentLog.isEmpty()) {
-          results.add(bestTimeToRemoveServer(currentLog));
-        }
-        currentLog = new ArrayList<>();
+      } else if (log.equals("END") && foundBegin && !currentLog.isEmpty()) {
+        results.add(bestTimeToRemoveServer(currentLog));
+        currentLog.clear();
         foundBegin = false;
       }
     }
@@ -85,10 +75,10 @@ public class ServerRemover {
   }
 
   @VisibleForTesting List<Log> parseLogs(String logString) {
-    var splitLogString = logString.split(" ");
+    String[] splitLogString = logString.split(" ");
     return IntStream.range(0, splitLogString.length)
         .mapToObj(index -> {
-          var log = splitLogString[index];
+          String log = splitLogString[index];
           return Log.builder()
               .isDown(log.equals("1"))
               .time(index + 1)

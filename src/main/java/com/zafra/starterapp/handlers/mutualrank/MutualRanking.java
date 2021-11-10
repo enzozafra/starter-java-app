@@ -40,9 +40,11 @@ public class MutualRanking {
     }
 
     if (index > 0) {
+      // simulate the swap by checking the other index
       if (hasMutualRanking(user, index, index - 1)) {
         results.add(currentRankings[index]);
       }
+      // test the other side of the swap (index - 1)
       if (hasMutualRanking(user, index - 1, index)) {
         results.add(currentRankings[index - 1]);
       }
