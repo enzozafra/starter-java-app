@@ -42,17 +42,17 @@ public class LocaleMatcher {
         .collect(toImmutableList());
   }
 
-  private List<LocalePattern> parsePatterns(String locales) {
-    return Arrays.stream(locales.split(","))
+  private List<LocalePattern> parsePatterns(String stringPatterns) {
+    return Arrays.stream(stringPatterns.split(","))
         .map(token -> StringUtils.trimAllWhitespace(token))
-        .map(stringLocale -> LocalePattern.of(stringLocale))
+        .map(pattern -> LocalePattern.of(pattern))
         .collect(toImmutableList());
   }
 
-  private List<Locale> parseLocales(List<String> stringPatterns) {
-    return stringPatterns
+  private List<Locale> parseLocales(List<String> locales) {
+    return locales
         .stream()
-        .map(stringPattern -> Locale.of(stringPattern))
+        .map(locale -> Locale.of(locale))
         .collect(toImmutableList());
   }
 
