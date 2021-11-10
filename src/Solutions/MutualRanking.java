@@ -16,7 +16,7 @@ public class MutualRanking {
    d, [a,c]
    index 0 is the highest rank
 
-   question 1: boolean hasMutualFirstChoice(String username)
+   question 1: boolean hasMutualFirstChoice(char username)
                mutual at the first rank
    question 2: boolean hasMutualRanking(char, int)，
                hasMutualRanking(a, 1) = true
