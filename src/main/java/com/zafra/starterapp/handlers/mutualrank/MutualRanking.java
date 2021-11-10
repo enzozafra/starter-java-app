@@ -15,9 +15,11 @@ public class MutualRanking {
     return hasMutualRanking(username, 0);
   }
 
+  //
   public boolean hasMutualRanking(char username, int rank) {
     Character choice = getUsersChoiceAtRanking(username, rank);
     return choice != null && getUsersChoiceAtRanking(choice, rank).equals(username);
+    // return hasMutualRanking(username, rank, rank);
   }
 
   public boolean hasMutualRanking(char username, int rank, int otherRank) {
