@@ -1,17 +1,17 @@
 package com.zafra.starterapp.controllers;
 
-import com.zafra.starterapp.handlers.Handler;
+import com.zafra.starterapp.handlers.Questrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloController {
-	private Handler handler;
+	private Questrade questrade;
 
 	@Autowired
-	public HelloController(Handler handler) {
-		this.handler = handler;
+	public HelloController(Questrade questrade) {
+		this.questrade = questrade;
 	}
 
 	@GetMapping("/")
@@ -21,12 +21,7 @@ public class HelloController {
 
 	@GetMapping("/handler")
 	public String callHandler() {
-		return handler.handle();
-	}
-
-	@GetMapping("/dependedhandler")
-	public String callDependedHandler() {
-		return handler.dependedHandlerMessage();
+		return "Check da logs brah";
 	}
 
 }
