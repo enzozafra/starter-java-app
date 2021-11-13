@@ -35,10 +35,10 @@ public class RecurringTransactionsTest {
   @Test
   public void getCompaniesWithRecurringTransactions_edgeCase() {
     var transactions = List.of(
-        new Transaction("Netflix", 9.99, 0),
-        new Transaction("Netflix", 9.99, 10),
+        new Transaction("Netflix", 9.99, 0), // <--
+        new Transaction("Netflix", 9.99, 10), // <--
         new Transaction("Netflix", 9.99, 15),
-        new Transaction("Netflix", 9.99, 20),
+        new Transaction("Netflix", 9.99, 20), // <-- should be recurring @ 10 day intervals
         new Transaction("Amazon", 27.12, 32),
         new Transaction("Sprint", 50.11, 45),
         new Transaction("Sprint", 50.11, 55),
