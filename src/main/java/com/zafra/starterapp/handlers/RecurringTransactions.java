@@ -26,28 +26,95 @@ public class RecurringTransactions {
         .collect(Collectors.toUnmodifiableList());
   }
 
-  public boolean hasRecurringTransactions(List<Transaction> transactions) {
+  private boolean hasRecurringTransactions(List<Transaction> transactions) {
     if (transactions.size() < 3) {
       return false;
     }
 
-    Map<String, Integer> numOccurenceMap = new HashMap<>();
+    int minInterval = getMinimumInterval(transactions);
+    int maxInterval = (int) (minInterval * 1.2);
+
+    double minAmount = getMinimumAmount(transactions);
+    double maxAmount = minAmount * 1.2;
 
     int prevTimestamp = transactions.get(0).getTimestamp();
 
-    for (int i = 1; i < transactions.size(); i++) {
+    for (int i = 0; i < transactions.size(); i++) {
       var transaction = transactions.get(i);
-      int numOccurence = numOccurenceMap.getOrDefault(transaction.getKey(prevTimestamp), 0);
+      var currAmount = transaction.getAmount();
 
-      if (i == 1) {
-        numOccurence += 1;
+      if (currAmount > maxAmount || currAmount < minAmount) {
+        return false;
       }
 
-      numOccurenceMap.put(transaction.getKey(prevTimestamp), numOccurence + 1);
-      prevTimestamp = transaction.getTimestamp();
+      if (i == 0) {
+        continue;
+      }
+
+      var timestamp = transaction.getTimestamp();
+      var currInterval = timestamp - prevTimestamp;
+      prevTimestamp = timestamp;
+
+      if (currInterval == 0 || currInterval > maxInterval || currInterval < minInterval) {
+        return false;
+      }
     }
 
-    return numOccurenceMap.values().stream()
-        .anyMatch(occurence -> occurence >= 3);
+    return true;
+  }
+
+  private boolean hasRecurringTransactionsWithoutMinMax(List<Transaction> transactions) {
+    if (transactions.size() < 3) {
+      return false;
+    }
+
+    int prevTimestamp = transactions.get(0).getTimestamp();
+    double amount = transactions.get(0).getAmount();
+
+    int interval = -1;
+
+    for (int i = 1; i < transactions.size(); i++) {
+      var transaction = transactions.get(i);
+      var currAmount = transaction.getAmount();
+
+      if (currAmount != amount) {
+        return false;
+      }
+
+      var timestamp = transaction.getTimestamp();
+      var currInterval = timestamp - prevTimestamp;
+      prevTimestamp = timestamp;
+
+      if (i == 1) {
+        interval = currInterval;
+        continue;
+      }
+
+      if (currInterval != interval) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private double getMinimumAmount(List<Transaction> transactions) {
+    return transactions.stream()
+        .mapToDouble(Transaction::getAmount)
+        .min()
+        .getAsDouble();
+  }
+
+  private int getMinimumInterval(List<Transaction> transactions) {
+    int minDifference = Integer.MAX_VALUE;
+    int prevTimestamp = transactions.get(0).getTimestamp();
+
+    for (int i = 1; i < transactions.size(); i++) {
+      int timestamp = transactions.get(i).getTimestamp();
+      minDifference = Math.min(timestamp - prevTimestamp, minDifference);
+      prevTimestamp = timestamp;
+    }
+
+    return minDifference;
   }
 }

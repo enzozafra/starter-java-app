@@ -26,25 +26,39 @@ public class RecurringTransactionsTest {
         new Transaction("Sprint", 50.11, 45),
         new Transaction("Sprint", 50.11, 55),
         new Transaction("Sprint", 50.11, 65),
-        new Transaction("Sprint", 60.13, 77),
         new Transaction("Netflix", 9.99, 50));
     assertThat(recurringTransactions.getCompanyWithRecurringTransactions(transactions))
-        .isEqualTo(List.of("Netflix", "Sprint"));
+        .isEqualTo(List.of("Sprint"));
   }
 
   @Test
-  public void getCompaniesWithRecurringTransactions_edgeCase() {
+  public void getCompaniesWithRecurringTransactions_checkAmountFirstIndex() {
     var transactions = List.of(
-        new Transaction("Netflix", 9.99, 0), // <--
-        new Transaction("Netflix", 9.99, 10), // <--
-        new Transaction("Netflix", 9.99, 15),
-        new Transaction("Netflix", 9.99, 20), // <-- should be recurring @ 10 day intervals
+        new Transaction("Netflix", 9.99, 0),
+        new Transaction("Netflix", 9.99, 10),
+        new Transaction("Netflix", 9.99, 20),
+        new Transaction("Netflix", 9.99, 30),
+        new Transaction("Amazon", 27.12, 32),
+        new Transaction("Sprint", 50.11, 45),
+        new Transaction("Sprint", 20, 55),
+        new Transaction("Sprint", 50.11, 65),
+        new Transaction("Netflix", 9.99, 50));
+    assertThat(recurringTransactions.getCompanyWithRecurringTransactions(transactions))
+        .isEqualTo(List.of());
+  }
+
+  @Test
+  public void getCompaniesWithRecurringTransactions_withMininumAndMaximum() {
+    var transactions = List.of(
+        new Transaction("Netflix", 9.99, 10),
+        new Transaction("Netflix", 9.99, 20),
+        new Transaction("Netflix", 9.99, 30),
         new Transaction("Amazon", 27.12, 32),
         new Transaction("Sprint", 50.11, 45),
         new Transaction("Sprint", 50.11, 55),
         new Transaction("Sprint", 50.11, 65),
-        new Transaction("Sprint", 60.13, 77),
-        new Transaction("Netflix", 9.99, 50));
+        new Transaction("Sprint", 60.13, 77));
+
     assertThat(recurringTransactions.getCompanyWithRecurringTransactions(transactions))
         .isEqualTo(List.of("Netflix", "Sprint"));
   }
