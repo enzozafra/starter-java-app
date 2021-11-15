@@ -12,6 +12,15 @@ public class RecurringTransactions {
   }
 
   public List<String> getCompanyWithRecurringTransactions(List<Transaction> transactions) {
+    Map<String, List<Transaction>> companyTransactionsMap =
+        generateCompanyToTransactionsMap(transactions);
+
+    return companyTransactionsMap.keySet().stream()
+        .filter(company -> hasRecurringTransactions(companyTransactionsMap.get(company)))
+        .collect(Collectors.toUnmodifiableList());
+  }
+
+  private Map<String, List<Transaction>> generateCompanyToTransactionsMap(List<Transaction> transactions) {
     Map<String, List<Transaction>> companyTransactionsMap = new HashMap<>();
     transactions.forEach(transaction -> {
       String company = transaction.getCompany();
@@ -21,9 +30,7 @@ public class RecurringTransactions {
       companyTransactions.add(transaction);
     });
 
-    return companyTransactionsMap.keySet().stream()
-        .filter(company -> hasRecurringTransactions(companyTransactionsMap.get(company)))
-        .collect(Collectors.toUnmodifiableList());
+    return companyTransactionsMap;
   }
 
   private boolean hasRecurringTransactions(List<Transaction> transactions) {
