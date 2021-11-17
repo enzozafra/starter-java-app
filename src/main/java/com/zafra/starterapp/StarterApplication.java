@@ -1,22 +1,69 @@
 package com.zafra.starterapp;
 
-import java.util.Arrays;
-import org.springframework.boot.SpringApplication;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class StarterApplication {
+  private static final String MEDIAN_HOUSEHOLD_INCOME_HEADER = "MEDIAN HOUSEHOLD INCOME";
 
   public static void main(String[] args) {
-    ApplicationContext ctx = SpringApplication.run(StarterApplication.class, args);
+    double averageHouseholdIncome =
+        // ../resources/2010.census.txt
+        parseStatistics("/Users/enzo/Development/personal/starterapp/src/main/resources/2010.census.txt");
+    System.out.println(String.format("The household income is: %s", averageHouseholdIncome));
+  }
 
-    System.out.println("Let's inspect the beans provided by Spring Boot:");
+  public static Double parseStatistics(String filePath) {
+    List<Integer> householdIncomes = new ArrayList<>();
 
-    String[] beanNames = ctx.getBeanDefinitionNames();
-    Arrays.sort(beanNames);
-    for (String beanName : beanNames) {
-      System.out.println(beanName);
+    try {
+      File myObj = new File(filePath);
+      Scanner myReader = new Scanner(myObj);
+
+      if (myReader.hasNextLine()) {
+        var headers = parseColumn(myReader.nextLine());
+        int householdIncomeColumnIndex = calculateIndex(headers, MEDIAN_HOUSEHOLD_INCOME_HEADER);
+
+        while (myReader.hasNextLine()) {
+          String column = myReader.nextLine();
+          String[] parsedColumn = parseColumn(column);
+          String householdIncomeForRow = parsedColumn[householdIncomeColumnIndex];
+          Integer householdIncome = Integer.parseInt(householdIncomeForRow);
+
+          if (householdIncome >= 0) {
+            householdIncomes.add(householdIncome);
+          }
+        }
+      }
+
+      myReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
     }
+
+    return householdIncomes.stream()
+        .mapToInt(item -> item)
+        .average()
+        .getAsDouble();
+  }
+
+  private static String[] parseColumn(String column) {
+    return column.split("\\|");
+  }
+
+  private static int calculateIndex(String[] headers, String headerName) {
+    for (int i = 0; i < headers.length; i++) {
+      if (headers[i].equals(headerName)) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 }
