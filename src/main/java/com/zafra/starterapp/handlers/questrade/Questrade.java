@@ -1,7 +1,7 @@
-package com.zafra.starterapp.handlers;
+package com.zafra.starterapp.handlers.questrade;
 
-import com.zafra.starterapp.models.Quote;
-import com.zafra.starterapp.models.StockSymbol;
+import com.zafra.starterapp.models.questrade.Quote;
+import com.zafra.starterapp.models.questrade.StockSymbol;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package com.zafra.starterapp.models;
+package com.zafra.starterapp.models.questrade;
 
 import java.util.List;
 import lombok.Builder;

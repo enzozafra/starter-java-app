@@ -1,5 +1,7 @@
 package com.zafra.starterapp.handlers;
 
+import com.zafra.starterapp.handlers.questrade.FinnHubApiConnector;
+import com.zafra.starterapp.handlers.questrade.Questrade;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

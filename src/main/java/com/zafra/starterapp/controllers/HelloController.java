@@ -1,6 +1,6 @@
 package com.zafra.starterapp.controllers;
 
-import com.zafra.starterapp.handlers.Questrade;
+import com.zafra.starterapp.handlers.questrade.Questrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

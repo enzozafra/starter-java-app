@@ -1,13 +1,13 @@
-package com.zafra.starterapp.handlers;
+package com.zafra.starterapp.handlers.questrade;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.zafra.starterapp.models.FindSymbolResponse;
-import com.zafra.starterapp.models.Quote;
-import com.zafra.starterapp.models.StockSymbol;
+import com.zafra.starterapp.models.questrade.FindSymbolResponse;
+import com.zafra.starterapp.models.questrade.Quote;
+import com.zafra.starterapp.models.questrade.StockSymbol;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;

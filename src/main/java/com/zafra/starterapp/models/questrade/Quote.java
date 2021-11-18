@@ -1,4 +1,4 @@
-package com.zafra.starterapp.models;
+package com.zafra.starterapp.models.questrade;
 
 import lombok.Data;
 
