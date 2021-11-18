@@ -2,9 +2,8 @@ package com.zafra.starterapp.handlers.catApi;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.grack.nanojson.JsonObject;
-import com.grack.nanojson.JsonParser;
 import com.grack.nanojson.JsonParserException;
+import com.jsoniter.JsonIterator;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -37,9 +36,11 @@ public class CatApiConnector {
 
   public String parseCatBreedFromJson(String filePath) throws IOException, JsonParserException {
     String jsonString = readFileAsString(filePath);
-    JsonObject json = JsonParser.object().from(jsonString);
+    //JsonObject json = JsonParser.object().from(jsonString);
+    var test = JsonIterator.deserialize(jsonString);
 
-    String breedGroup = (String) json.get("breed_group");
+    //String breedGroup = (String) json.get("breed_group");
+    String breedGroup = test.get("breed_group").toString();
     return breedGroup;
   }
 
